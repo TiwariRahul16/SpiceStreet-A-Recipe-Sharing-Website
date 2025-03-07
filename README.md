@@ -1,1 +1,1 @@
-SpiceStreet- A Recipe Sharing Website
+Forkistry – A mix of "Fork" and "Artistry," representing the art of cooking.
