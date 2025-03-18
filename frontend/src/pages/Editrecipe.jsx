@@ -1,11 +1,11 @@
-import React from 'react'
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Assuming route-based editing
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Editrecipe = ({ recipes, updateRecipe }) => {
-  const { id } = useParams(); // Get recipe ID from URL
-  // const existingRecipe = recipes.find((r) => r.id === id);
-  const existingRecipe = recipes;
+const EditRecipe = () => {
+  const { recipeId } = useParams();  // Get recipeId from URL params
+  const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [recipe, setRecipe] = useState({
     title: "",
@@ -15,41 +15,31 @@ const Editrecipe = ({ recipes, updateRecipe }) => {
     serving: "",
     ingredients: [""],
     instructions: "",
-    image: null,
-    previewImage: null,
+    previewImage: "",
   });
 
+  // Fetch recipe data when component mounts
   useEffect(() => {
-    if (existingRecipe) {
-      setRecipe({
-        ...existingRecipe,
-        previewImage: existingRecipe.image || null,
+    axios
+      .get(`http://localhost:5000/api/recipe/${recipeId}`)
+      .then((response) => {
+        setRecipe(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching recipe:", error);
       });
-    }
-  }, [existingRecipe]);
+  }, [recipeId]);
 
-  // Handle text input changes
+  // Handle input changes
   const handleChange = (e) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
   };
 
-  // Handle image upload
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setRecipe({
-        ...recipe,
-        image: file,
-        previewImage: URL.createObjectURL(file),
-      });
-    }
-  };
-
   // Handle ingredient change
   const handleIngredientChange = (index, value) => {
-    const updatedIngredients = [...recipe.ingredients];
-    updatedIngredients[index] = value;
-    setRecipe({ ...recipe, ingredients: updatedIngredients });
+    const newIngredients = [...recipe.ingredients];
+    newIngredients[index] = value;
+    setRecipe({ ...recipe, ingredients: newIngredients });
   };
 
   // Add new ingredient
@@ -57,43 +47,65 @@ const Editrecipe = ({ recipes, updateRecipe }) => {
     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
   };
 
-  // Remove an ingredient
+  // Remove ingredient
   const removeIngredient = (index) => {
-    const updatedIngredients = recipe.ingredients.filter((_, i) => i !== index);
-    setRecipe({ ...recipe, ingredients: updatedIngredients });
+    const newIngredients = recipe.ingredients.filter((_, i) => i !== index);
+    setRecipe({ ...recipe, ingredients: newIngredients });
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    updateRecipe(recipe);
-    alert("Recipe Updated Successfully!");
+
+    const formData = new FormData();
+    formData.append("title", recipe.title);
+    formData.append("category", recipe.category);
+    formData.append("cuisine", recipe.cuisine);
+    formData.append("time", recipe.time);
+    formData.append("serving", recipe.serving);
+    formData.append("ingredients", JSON.stringify(recipe.ingredients));
+    formData.append("instructions", recipe.instructions);
+
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
+
+    axios
+      .put(`http://localhost:5000/api/recipes/${recipeId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(() => {
+        alert("Recipe updated successfully!");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error updating recipe:", error);
+      });
   };
+
+
   return (
-<>
     <div className="edit-recipe-container">
       <h2 className="form-title">✏️ Edit Recipe</h2>
       <form onSubmit={handleSubmit} className="recipe-form">
-        
-        {/* Recipe Image Upload */}
-        <div className="form-group image-upload">
-          <label>Update Image:</label>
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
-          {recipe.previewImage && (
-            <img src={recipe.previewImage} alt="Preview" className="preview-image" />
-          )}
+        {/* Recipe Image */}
+        <div className="form-group">
+          <label>Upload New Image:</label>
+          <input type="file" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} />
         </div>
+
+        {/* Preview Existing Image */}
+        {recipe.image && (
+          <div>
+            <p>Current Image:</p>
+            <img src={`http://localhost:5000${recipe.image}`} alt="Recipe" width="200px" />
+          </div>
+        )}
 
         {/* Recipe Title */}
         <div className="form-group">
           <label>Recipe Title:</label>
-          <input
-            type="text"
-            name="title"
-            value={recipe.title}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" name="title" value={recipe.title} onChange={handleChange} required />
         </div>
 
         {/* Category */}
@@ -123,27 +135,13 @@ const Editrecipe = ({ recipes, updateRecipe }) => {
         {/* Cooking Time */}
         <div className="form-group">
           <label>Cooking Time (Minutes):</label>
-          <input
-            type="number"
-            name="time"
-            value={recipe.time}
-            onChange={handleChange}
-            min="1"
-            required
-          />
+          <input type="number" name="time" value={recipe.time} onChange={handleChange} min="1" required />
         </div>
 
         {/* Serving Size */}
         <div className="form-group">
           <label>Serving Size:</label>
-          <input
-            type="number"
-            name="serving"
-            value={recipe.serving}
-            onChange={handleChange}
-            min="1"
-            required
-          />
+          <input type="number" name="serving" value={recipe.serving} onChange={handleChange} min="1" required />
         </div>
 
         {/* Ingredients */}
@@ -151,38 +149,24 @@ const Editrecipe = ({ recipes, updateRecipe }) => {
           <label>Ingredients:</label>
           {recipe.ingredients.map((ingredient, index) => (
             <div key={index} className="ingredient-item">
-              <input
-                type="text"
-                value={ingredient}
-                onChange={(e) => handleIngredientChange(index, e.target.value)}
-                required
-              />
-              {index > 0 && (
-                <button type="button" className="remove-btn" onClick={() => removeIngredient(index)}>❌</button>
-              )}
+              <input type="text" value={ingredient} onChange={(e) => handleIngredientChange(index, e.target.value)} required />
+              {index > 0 && <button type="button" onClick={() => removeIngredient(index)}>❌</button>}
             </div>
           ))}
-          <button type="button" className="add-btn" onClick={addIngredient}>➕ Add Ingredient</button>
+          <button type="button" onClick={addIngredient}>➕ Add Ingredient</button>
         </div>
 
         {/* Instructions */}
         <div className="form-group">
           <label>Instructions:</label>
-          <textarea
-            name="instructions"
-            rows="4"
-            value={recipe.instructions}
-            onChange={handleChange}
-            required
-          ></textarea>
+          <textarea name="instructions" rows="4" value={recipe.instructions} onChange={handleChange} required></textarea>
         </div>
 
         {/* Submit Button */}
         <button type="submit" className="submit-btn">Update Recipe</button>
       </form>
     </div>
-</>
-  )
-}
+  );
+};
 
-export default Editrecipe
+export default EditRecipe;

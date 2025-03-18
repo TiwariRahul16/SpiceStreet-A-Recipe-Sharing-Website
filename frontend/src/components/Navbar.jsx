@@ -1,42 +1,25 @@
 import React from 'react';
 import { Link,useLocation} from 'react-router-dom';
 import { useState,useEffect,useRef } from 'react';
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('username'));
-  const navigate = useNavigate();
-
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
+      // checking logging status
     const checkLoginStatus = () => {
       setIsLoggedIn(!!localStorage.getItem('username'));
     };
 
-    window.addEventListener('storage', checkLoginStatus);
+    window.addEventListener('storage', checkLoginStatus());
 
     return () => {
-      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('storage', checkLoginStatus());
     };
-  }, []);
+  });
 
-  const handleLogout = () => {
-    localStorage.removeItem('username'); // Remove username on logout
-    setIsLoggedIn(false); // Update state
-    navigate('/login'); // Redirect to login page
-  };
-
-  const location = useLocation(); // Get current route path
-
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  // Toggle dropdown when clicking the image
-  const toggleDropdown = () => {
-    setOpen(!open);
-  };
-
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -48,6 +31,18 @@ const Navbar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('username'); // Remove username on logout
+    setIsLoggedIn(false); // Update state
+  };
+
+  const location = useLocation(); // Get current route path
+
+  // Toggle dropdown when clicking the image
+  const toggleDropdown = () => {
+    setOpen(!open);
+  };
 
   return (
     <>
@@ -87,15 +82,16 @@ const Navbar = () => {
           )}
             
         {isLoggedIn  && (
-              <div className="loginSignup profile_dropdown" ref={dropdownRef}>
+              <div className="profile_dropdown" ref={dropdownRef}>
               <div className="profile-icon" onClick={toggleDropdown}>
                 <img height={30} width={30} src="logo192.png" alt="Profile" />
               </div>
               {open && (
                 <ul className="dropdown-profilemenu">
-                  <li><Link to="home" onClick={handleLogout}>Logout</Link></li>
+                  <li><Link to={'login'} onClick={handleLogout}>Logout</Link></li>
                   <li><Link to="addrecipe">Add Recipe</Link></li>
-                  <li><Link to="editrecipe">Edit Recipe</Link></li>
+                  {/* <li><Link to="editrecipe">Edit Recipe</Link></li> */}
+                  <li><Link to="yourrecipe">Your Recipes</Link></li>
                   <li><Link to="savedrecipes">Saved Recipes</Link></li>
                 </ul>
               )}

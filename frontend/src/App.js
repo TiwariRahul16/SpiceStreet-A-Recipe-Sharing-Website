@@ -12,6 +12,7 @@ import Savedrecipes from "./pages/Savedrecipes";
 import Editrecipe from "./pages/Editrecipe";
 import Recipe from "./pages/Recipe";
 import RecipeDetail from "./pages/RecipeDetail";
+import Yourrecipe from "./pages/Yourrecipe";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,20 +26,20 @@ function App() {
 
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar/>
       <Routes>
-        {/* Redirect to Login if not logged in */}
         <Route path="/" element={<Home /> } />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/home" element={ <Home /> } />
         <Route path="/recipe" element={ <Recipe /> } />
         <Route path="/about" element={ <About /> } />
         <Route path="/contact" element={ <Contact /> } />
         <Route path="/addrecipe" element={ <Addrecipe /> } />
         <Route path="/savedrecipes" element={ <Savedrecipes /> } />
-        <Route path="/editrecipe" element={<Editrecipe />} />
-        <Route path="/recipeDetail" element={<RecipeDetail />} />
+        <Route path="/editrecipe/:recipeId" element={<Editrecipe />} />
+        <Route path="/yourrecipe" element={<Yourrecipe />} />
+        <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
       </Routes>
       <Footer />
     </Router>

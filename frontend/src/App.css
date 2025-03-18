@@ -1,175 +1,201 @@
 .navbar-brand {
-    color: red;
-    font-size: 2rem; 
-    font-family: 'Courier New', Courier, monospace;
+  color: red;
+  font-size: 2rem; 
+  font-family: 'Courier New', Courier, monospace;
 }
 .profile_dropdown {
-  position: relative;
-  display: inline-block;
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 /* Profile Image */
 .profile-icon img {
-  cursor: pointer;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
+cursor: pointer;
+border-radius: 50%;
+transition: transform 0.3s ease;
 }
 
 .profile-icon img:hover {
-  transform: scale(1.1);
+transform: scale(1.1);
 }
 
 /* Dropdown Menu */
 .dropdown-profilemenu {
-  position: absolute;
-  right: 0px;
-  top: 40px;
-  background: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  width: 180px;
-  list-style: none;
-  padding: 10px 0;
-  z-index: 100;
+position: absolute;
+right: 0px;
+top: 40px;
+background: white;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+border-radius: 8px;
+width: 180px;
+list-style: none;
+padding: 10px 0;
+z-index: 100;
 }
 
 .dropdown-profilemenu li {
-  padding: 10px;
-  text-align: center;
+padding: 10px;
+text-align: center;
 }
 
 .dropdown-profilemenu li a{
-  text-decoration: none;
-  color: #333;
-  display: block;
+text-decoration: none;
+color: #333;
+display: block;
 }
 
 .dropdown-profilemenu li:hover {
-  background: #f0f0f0;
+background: #f0f0f0;
 }
 
 .loginSignup{
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 15px;
 }
 
 
 /* Home */
 .main{
-    min-height: 100vh;
-    width: 100%;
-    /* background-color: orange; */
+  min-height: 100vh;
+  width: 100%;
+  /* background-color: orange; */
 }
 
 
 /* contact form */
 .contact{
-    text-align: center;
+  text-align: center;
 }
 .contactform {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 20rem;
-    width:40rem;
-    background-color: brown;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 20rem;
+  width:40rem;
+  background-color: brown;
 }
 
 /* footer */
 .footer{
-    font-size: 2rem;
-    width: 100%;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    color: red;
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: red;
 }
-
-
-
-
-
-
-
 
 
 /* Container Styling */
 /* .container {
-    max-width: 85%;
-  } */
-  
-  /* Food Image */
-  .food-img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    /* transition: transform 0.3s ease-in-out; */
+ height: 15rem;
+} */
+
+/* Food Image */
+.food-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  /* transition: transform 0.3s ease-in-out; */
+}
+
+.food-img:hover {
+  /* transform: scale(1.03); */
+}
+
+/* Chef Image */
+.chef-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ff5722;
+}
+
+/* Recipe Info Box */
+.info-box p {
+  background: #ffebcc;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Ingredients Box */
+.ingredients-box {
+  background: #fffaf0;
+  border-left: 5px solid #ff5722;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.ingredients-box ul li {
+  padding: 5px 0;
+  font-size: 16px;
+}
+
+/* Steps Box */
+.steps-box {
+  background: #f1f8ff;
+  border-left: 5px solid #007bff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.steps-box ol li {
+  padding: 8px 0;
+  font-size: 16px;
+  /* transition: transform 0.2s ease-in-out; */
+}
+
+.steps-box ol li:hover {
+  transform: translateX(5px);
+}
+
+/* Back Button */
+.btn-outline-dark {
+  border-radius: 30px;
+  /* transition: background 0.3s ease-in-out; */
+}
+
+.btn-outline-dark:hover {
+  background: black;
+  color: white;
+}
+
+
+/* home card */
+@media (max-width:768px) {
+  /* navbar */
+  .loginSignup{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
   }
-  
-  .food-img:hover {
-    /* transform: scale(1.03); */
+  .nav-link.active {
+    border-bottom: 0px solid #ff5722;
   }
-  
-  /* Chef Image */
-  .chef-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #ff5722;
+  /* home card */
+  .featured-recipes{
+    height:40rem;
+    overflow: scroll;
   }
-  
-  /* Recipe Info Box */
-  .info-box p {
-    background: #ffebcc;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    display: inline-block;
-    margin-right: 10px;
+  /* recipe card */
+  .recipepage-card{
+    height: 40rem;
+    overflow : scroll;
   }
-  
-  /* Ingredients Box */
-  .ingredients-box {
-    background: #fffaf0;
-    border-left: 5px solid #ff5722;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  .recipe-card1{
+    margin-top: 13px;
   }
-  
-  .ingredients-box ul li {
-    padding: 5px 0;
-    font-size: 16px;
+  .profile-icon{
+    margin-right: 20px;
+    margin-top: 10px;
   }
-  
-  /* Steps Box */
-  .steps-box {
-    background: #f1f8ff;
-    border-left: 5px solid #007bff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  .steps-box ol li {
-    padding: 8px 0;
-    font-size: 16px;
-    /* transition: transform 0.2s ease-in-out; */
-  }
-  
-  .steps-box ol li:hover {
-    transform: translateX(5px);
-  }
-  
-  /* Back Button */
-  .btn-outline-dark {
-    border-radius: 30px;
-    /* transition: background 0.3s ease-in-out; */
-  }
-  
-  .btn-outline-dark:hover {
-    background: black;
-    color: white;
-  }
-  
+}

@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 const Home = () => {
   // Dummy Data for Categories and Recipes
 const categories = [
-  { name: "Indian", image: "https://images.unsplash.com/photo-1553621042-f6e147245754", link: "indian" },
-  { name: "Italian", image: "https://images.unsplash.com/photo-1543353071-10c8ba85a904", link: "italian" },
-  { name: "Chinese", image: "https://images.unsplash.com/photo-1571984195307-83336fdbcd7b", link: "chinese" }
+  { name: "Indian", image: "/images/home-Indian.jpg", link: "indian" },
+  { name: "Italian", image: "/images/home-italian.avif", link: "italian" },
+  { name: "Chinese", image: "/images/home-chinese.avif", link: "chinese" }
 ];
 
 const recipes = [
-  { name: "Hyderabadi Biryani", image: "https://images.unsplash.com/photo-1553621042-f6e147245754", description: "Aromatic rice dish with flavorful spices.", link: "biryani" },
-  { name: "Pizza Margherita", image: "https://images.unsplash.com/photo-1543353071-10c8ba85a904", description: "Classic Italian pizza with fresh tomatoes and basil.", link: "pizza" },
-  { name: "Kung Pao Chicken", image: "https://images.unsplash.com/photo-1571984195307-83336fdbcd7b", description: "A spicy, stir-fried Chinese dish with peanuts.", link: "kungpao" }
+  { name: "Hyderabadi Biryani", image: "/images/hyderabadi-biryani.jpg", description: "Aromatic rice dish with flavorful spices.", link: "biryani" },
+  { name: "Pizza Margherita", image:"/images/Margherita-Pizza.webp", description: "Classic Italian pizza with fresh tomatoes and basil.", link: "pizza" },
+  { name: "Kung Pao Chicken", image: "/images/kung-pao-checken.webp", description: "A spicy, stir-fried Chinese dish with peanuts.", link: "kungpao" },
 ];
   return (
     <div>
@@ -26,12 +26,12 @@ const recipes = [
       </section>
 
       {/* Food Categories */}
-      <section className="container my-5">
+      <section className="container bg-light featured-recipes py-5 my-5">
         <h2 className="text-center mb-4">Popular Food Categories</h2>
         <div className="row">
           {categories.map((category, index) => (
             <div className="col-md-4 text-center" key={index}>
-              <div className="category-card">
+              <div className="category-card my-1">
                 <img src={category.image} alt={category.name} className="img-fluid rounded"/>
                 <h4 className="mt-3">{category.name}</h4>
                 {/* <Link to={`/category/${category.link}`} className="btn btn-outline-danger mt-2">View More</Link> */}
@@ -43,13 +43,13 @@ const recipes = [
       </section>
 
       {/* Featured Recipes */}
-      <section className="featured-recipes bg-light py-5">
+      <section className="featured-recipes py-5">
         <div className="container">
           <h2 className="text-center mb-4">Featured Recipes</h2>
           <div className="row">
             {recipes.map((recipe, index) => (
               <div className="col-md-4" key={index}>
-                <div className="card recipe-card">
+                <div className="card recipe-card my-2">
                   <img src={recipe.image} className="card-img-top" alt={recipe.name} />
                   <div className="card-body">
                     <h5 className="card-title">{recipe.name}</h5>

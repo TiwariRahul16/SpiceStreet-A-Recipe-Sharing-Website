@@ -1,31 +1,5 @@
 import React, { useState } from "react";
 
-// const Contact = () => {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [message, setMessage] = useState("");
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     alert(`Thank you, ${name}! We will get back to you soon.`);
-//     // You can add API logic here to send the form data
-//   };
-
-//   return (
-//     <div className="container">
-//       <h2>Contact Us</h2>
-//       <form onSubmit={handleSubmit}>
-//         <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} required />
-//         <input type="email" placeholder="Your Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-//         <textarea placeholder="Your Message" value={message} onChange={(e) => setMessage(e.target.value)} required />
-//         <button class='btn'  type="submit">Send Message</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Contact;
-
 export default function Contact() {
   const [result, setResult] = React.useState("");
 
@@ -55,19 +29,6 @@ export default function Contact() {
   return (
     <>
 
-{/* // <div >
-    //   <form  onSubmit={onSubmit}>
-    //     <input type="text" name="name" required/>
-    //     <input type="email" name="email" required/>
-    //     <textarea name="message" required></textarea>
-
-    //     <button type="submit">Submit Form</button>
-
-    //   </form>
-    //   <span>{result}</span>
-
-    // </div> */}
-
 <section class="py-3 py-md-5 py-xl-8">
   <div class="container">
     <div class="row justify-content-md-center">
@@ -85,7 +46,7 @@ export default function Contact() {
         <div class="card border border-dark rounded shadow-sm overflow-hidden">
           <div class="card-body p-0">
             <div class="row gy-3 gy-md-4 gy-lg-0">
-            <div className="col-12 col-lg-6 bsb-overlay background-position-center background-size-cover" style={{ "--bsb-overlay-opacity": 0.7, backgroundImage: "url('./assets/img/contact-img-1.webp')" }}>
+            <div className="col-12 col-lg-6 bsb-overlay background-position-center background-size-cover" style={{ "--bsb-overlay-opacity": 0.7, backgroundImage: "url('/images/contact.jpg')" }}>
                 <div class="row align-items-lg-center justify-content-center h-100">
                   <div class="col-11 col-xl-10">
                     <div class="contact-info-wrapper py-4 py-xl-5">
